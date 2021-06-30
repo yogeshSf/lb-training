@@ -1,0 +1,10 @@
+{
+  "ids": {
+    "Users": 4
+  },
+  "models": {
+    "Users": {
+      "3": "{\"id\":3,\"firstName\":\"egwrh\",\"lastName\":\"qwfegr\",\"middleName\":\"qfe\",\"phoneNumber\":\"qdfw\",\"email\":\"qw@f.ff\",\"address\":\"wegrwe\",\"role\":\"Admin\",\"createdOn\":null,\"modifiedOn\":null,\"isEditable\":true}"
+    }
+  }
+}

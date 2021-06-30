@@ -1,0 +1,165 @@
+<br />
+<button type="button" (click)="addNameField(null)" class="btn btn-success" [ngClass]="'pad'">Add More users</button>
+<br />
+<br />
+<form [formGroup]="angForm" (ngSubmit)="onFormSubmit()">
+  <div formArrayName="users">
+    <div>
+      <div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Middle Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Role</th>
+              <th>Address</th>
+              <!-- <th>Created At</th>
+              <th>modified At</th> -->
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users.controls; index as idx" class="form-group" [formGroupName]="idx">
+              <td> <span>{{users.value[idx].id}} </span></td>
+              <td>
+                <span *ngIf="!users.value[idx].isEditable">{{users.value[idx].firstName}} </span>
+                <input type="text" formControlName="firstName" *ngIf="users.value[idx].isEditable" />
+                <!-- <div *ngIf="users.errors && (users.dirty || users.touched)"
+                  class="alert alert-danger">
+                  <div *ngIf="users.errors.required">First Name is required.</div>
+                </div> -->
+              </td>
+              <td>
+                <input type="text" formControlName="lastName" *ngIf="users.value[idx].isEditable" />
+                <span *ngIf="!users.value[idx].isEditable">{{users.value[idx].lastName}} </span>
+              </td>
+              <td>
+                <input type="text" formControlName="middleName" *ngIf="users.value[idx].isEditable" />
+                <span *ngIf="!users.value[idx].isEditable">{{users.value[idx].middleName}} </span>
+              </td>
+              <td>
+                <input type="text" formControlName="email" *ngIf="users.value[idx].isEditable" />
+                <span *ngIf="!users.value[idx].isEditable">{{users.value[idx].email}} </span>
+              </td>
+              <td>
+                <input type="text" formControlName="phoneNumber" *ngIf="users.value[idx].isEditable" />
+                <span *ngIf="!users.value[idx].isEditable">{{users.value[idx].phoneNumber}} </span>
+              </td>
+              <td>
+
+                <select id="where-input" formControlName="role" *ngIf="users.value[idx].isEditable">
+                  <option value="0" disabled selected>Select an Option</option>
+                  <option *ngFor="let r of roles" value="{{r}}">{{r }}</option>
+                </select>
+
+                <!-- <input type="text" formControlName="role" *ngIf="users.value[idx].isEditable" /> -->
+                <span *ngIf="!users.value[idx].isEditable">{{users.value[idx].role}} </span>
+              </td>
+              <td>
+                <textarea formControlName="address" *ngIf="users.value[idx].isEditable" cols="15" rows="6">
+                </textarea>
+                <!-- <input type="text" formControlName="address" *ngIf="users.value[idx].isEditable" /> -->
+                <span *ngIf="!users.value[idx].isEditable">{{users.value[idx].address}} </span>
+              </td>
+              <!-- <td>
+                <input type="date" formControlName="createdOn" *ngIf="users.value[idx].isEditable" />
+                <span *ngIf="!users.value[idx].isEditable">{{users.value[idx].createdOn}} </span>
+              </td> -->
+              <!-- <td>
+                <input type="date" formControlName="modifiedOn" *ngIf="users.value[idx].isEditable" />
+                <span *ngIf="!users.value[idx].isEditable">{{users.value[idx].modifiedOn}} </span>
+              </td> -->
+              <td>
+                <button *ngIf="!users.value[idx].isEditable" (click)="eidtRow(users.value[idx],idx)">Edit</button>
+                <button *ngIf="!users.value[idx].isEditable" (click)="deleteUser(users.value[idx],idx)">Delete</button>
+                <button *ngIf="users.value[idx].isEditable"
+                  (click)="users.value[idx].id ? updateUser(users.value[idx],idx):createUser(users.value[idx],idx)"
+                  [disabled]="!angForm.valid">Save</button>
+                <button *ngIf="users.value[idx].isEditable" (click)="eidtRow(users.value[idx],idx)">Cancel</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</form>
+<br />
+
+<router-outlet></router-outlet>
+
+
+<!-- <table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Middle Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Role</th>
+      <th>Address</th>
+      <th>Created At</th>
+      <th>modified At</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>
+        <input type="text" [(ngModel)]="user.id" *ngIf="!!user.isEditable" />
+        <span *ngIf="!user.isEditable">{{user.id}} </span>
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="user.firstName" *ngIf="!!user.isEditable" />
+        <span *ngIf="!user.isEditable">{{user.firstName}} </span>
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="user.lastName" *ngIf="!!user.isEditable" />
+        <span *ngIf="!user.isEditable">{{user.lastName}} </span>
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="user.middleName" *ngIf="!!user.isEditable" />
+        <span *ngIf="!user.isEditable">{{user.middleName}} </span>
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="user.email" *ngIf="!!user.isEditable" />
+        <span *ngIf="!user.isEditable">{{user.email}} </span>
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="user.phoneNumber" *ngIf="!!user.isEditable" />
+        <span *ngIf="!user.isEditable">{{user.phoneNumber}} </span>
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="user.role" *ngIf="!!user.isEditable" />
+        <span *ngIf="!user.isEditable">{{user.role}} </span>
+      </td>
+      <td>
+        <textarea *ngIf="!!user.isEditable" [(ngModel)]='user.address' cols="20" rows="6"></textarea>
+        <span *ngIf="!user.isEditable">{{user.address}} </span>
+      </td>
+      <td>
+        <input type="date" [(ngModel)]="user.createdOn" *ngIf="!!user.isEditable" />
+        <span *ngIf="!user.isEditable">{{user.createdOn | date}} </span>
+      </td>
+      <td>
+        <input type="date" [(ngModel)]="user.modifiedOn" *ngIf="!!user.isEditable" />
+        <span *ngIf="!user.isEditable">{{user.modifiedOn | date}} </span>
+      </td>
+      <td>
+        <button class="btn-info" (click)="user.isEditable=!user.isEditable" *ngIf="!user.isEditable">Edit</button>
+        <button class="btn-info" (click)="deleteUser(user.id)" *ngIf="!user.isEditable">delete</button>
+        <button class="btn-success" *ngIf="user.isEditable"
+          (click)="user.isEditable=!user.isEditable;updateUser(user)">Save</button>
+        <button class="btn-danger" *ngIf="user.isEditable"
+          (click)="user.isEditable=!user.isEditable;getUsers()">Cancel</button>
+      </td>
+    </tr>
+  </tbody>
+</table> -->
